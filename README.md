@@ -4,16 +4,19 @@
 
 `add-time-to-srt.sh` - Add time stamps to a subtitle file in `srt` format
 
+
 ### Purpose
 
 When the subtitles of a subtitle file (in `.srt` format) are not in synch with the movie,
 one might want to resynchronize the subtitle file using some tool like the **SubFix** application.
+
 
 ### Synopsis
 
 ~~~sh
     add-time-to-srt.sh [option] [file]
 ~~~
+
 
 ### Description
 
@@ -32,6 +35,23 @@ This shell script takes as input a subtitle file (in `.srt` format) and writes i
    - a new subtitle with the current time,
    - every 1/10 s (by default),
    - between existing subtitles.
+
+
+### Install
+
+Clone this repository or copy its files in some directory.
+
+Both files "add-time-to-srt.sh" and "add-time-to-srt.awk" must be in the same directory.
+
+If this directory is referenced in the variable "$PATH" of your shell, you can launch the command with `add-time-to-srt.sh ...`
+otherwise, you'll have to type the full path `path/to/dir/add-time-to-srt.sh ...`.
+
+
+### Requirements
+
+This script should run on any machine with `bash` and `awk` (macOS, linux, un*x, cygwin...).
+
+It has originally been developped under OSX El Capitan 10.11.6 with GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin15) and awk version 20070501. As it does not use any known bashism, it could be run from any shell.
 
 
 ### Global usage
@@ -65,6 +85,7 @@ This shell script takes as input a subtitle file (in `.srt` format) and writes i
    - Save the fixed subtitle file:  
      menu **File > Save as...** `the-movie.srt`
 
+
 ### Script options
 
 * `-v style=[top | left | right | bottom]`  (default: 'bottom')
@@ -90,6 +111,7 @@ This shell script takes as input a subtitle file (in `.srt` format) and writes i
 * `-v start_time='hh:mm:ss,xxx'`  (default: '00:00:00,000')
 
  Start the new timetags from the specified time.
+
 
 ### Examples:
 
