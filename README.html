@@ -11,7 +11,152 @@
 
 <body>
 
-/bin/bash: markdown: command not found
+<h1>add-time-to-srt</h1>
+
+<h3>Name</h3>
+
+<p><code>add-time-to-srt.sh</code> - Add time stamps to a subtitle file in <code>srt</code> format</p>
+
+<h3>Purpose</h3>
+
+<p>When the subtitles of a subtitle file (in <code>.srt</code> format) are not in synch with the movie,
+one might want to resynchronize the subtitle file using some tool like the <strong>SubFix</strong> application.</p>
+
+<h3>Synopsis</h3>
+
+<p><code>
+    add-time-to-srt.sh [option] [file]
+</code></p>
+
+<h3>Description</h3>
+
+<p>This shell script takes as input a subtitle file (in <code>.srt</code> format) and writes it on the standard output with some additions.</p>
+
+<ul>
+<li><p>It inserts:</p>
+
+<ul>
+<li>in each existing subtitle,</li>
+<li>the precise beginning time of this subtitle,</li>
+<li>at some place in the existing subtitle, either:
+<ul>
+<li>above its first line,</li>
+<li>or to the left of its first line,</li>
+<li>or to the right of its first line,</li>
+<li>or below its last line (by default).</li>
+</ul></li>
+</ul></li>
+<li><p>It inserts:</p>
+
+<ul>
+<li>a new subtitle with the current time,</li>
+<li>every 1/10 s (by default),</li>
+<li>between existing subtitles.</li>
+</ul></li>
+</ul>
+
+<h3>Install</h3>
+
+<p>Clone this repository or copy its files in some directory.</p>
+
+<p>Both files "add-time-to-srt.sh" and "add-time-to-srt.awk" must be in the same directory.</p>
+
+<p>If this directory is referenced in the variable "$PATH" of your shell, you can launch the command with <code>add-time-to-srt.sh ...</code>
+otherwise, you'll have to type the full path <code>path/to/dir/add-time-to-srt.sh ...</code>.</p>
+
+<h3>Requirements</h3>
+
+<p>This script should run on any machine with <code>bash</code> and <code>awk</code> (macOS, linux, un*x, cygwin...).</p>
+
+<p>It has originally been developped under OSX El Capitan 10.11.6 with GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin15) and awk version 20070501. As it does not use any known bashism, it could be run from any shell.</p>
+
+<h3>Global usage</h3>
+
+<ul>
+<li>Save the original subtitle file:</li>
+</ul>
+
+<p><code>
+    mv the-movie.srt the-movie-sav.srt
+</code></p>
+
+<ul>
+<li>Add timetags:</li>
+</ul>
+
+<p><code>
+    add-time-to-srt.sh -v end_time='01:30:00,000' the-movie-sav.srt > the-movie.srt
+</code></p>
+
+<ul>
+<li><p>Open the movie file (with <strong>VLC</strong>, for example)</p>
+
+<ul>
+<li>find the beginning time of the first subtitle (using the <strong>pause</strong> button)  </li>
+<li>find the beginning time of the last subtitle (using the <strong>pause</strong> button)</li>
+</ul></li>
+<li><p>Remove the file with superfluous subtitles:</p></li>
+</ul>
+
+<p><code>
+    rm the-movie.srt
+</code></p>
+
+<ul>
+<li>Launch the <strong>SubFix</strong> application.
+<ul>
+<li>Open the original subtitle file <code>the-movie-sav.srt</code>.</li>
+<li>Fix the first and last subtitle times.</li>
+<li>Save the fixed subtitle file: <br />
+menu <strong>File > Save as...</strong> <code>the-movie.srt</code></li>
+</ul></li>
+</ul>
+
+<h3>Script options</h3>
+
+<ul>
+<li><p><code>-v style=[top | left | right | bottom]</code>  (default: 'bottom')</p>
+
+<p>Choose the place to insert its timetag in an existing subtitle:</p>
+
+<ul>
+<li><code>top</code>: above its first line,</li>
+<li><code>left</code>: to the left of its first line,</li>
+<li><code>right</code>: to the right of its first line,</li>
+<li><code>bottom</code>: below its last line (by default).</li>
+</ul></li>
+<li><p><code>-v delta='hh:mm:ss,xxx'</code>  (default: '00:00:00,100' = 1/10th sec)</p>
+
+<p>Choose the delay between new pure timetag subtitles.</p></li>
+<li><p><code>-v end_time='hh:mm:ss,xxx'</code></p>
+
+<p>When this option is present, insert new pure timetag subtitles after the last existing subtitle until the specified <code>end_time</code>.</p></li>
+<li><p><code>-v first_st_index=&lt;n&gt;</code>        (default: 1)</p>
+
+<p>Start the numbering of subtitles from the specified index.</p></li>
+<li><p><code>-v start_time='hh:mm:ss,xxx'</code>  (default: '00:00:00,000')</p>
+
+<p>Start the new timetags from the specified time.</p></li>
+</ul>
+
+<h3>Examples:</h3>
+
+<ul>
+<li>Minimal command</li>
+</ul>
+
+<p><code>
+add-time-to-srt.sh &lt; file.srt > file_t.srt
+</code></p>
+
+<ul>
+<li>Print just five timetags with no input</li>
+</ul>
+
+<p><code>
+add-time-to-srt.sh -v style=left -v start<em>time='00:00:01,000' \
+  -v delta='00:00:00,200' -v end</em>time='00:00:02,000'  &lt; /dev/null
+</code></p>
 
 </body>
 </html>
